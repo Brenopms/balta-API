@@ -21,8 +21,9 @@ let route = router.get('/', (req, res, next) => {
 app.use('/', route);
 
 app.listen(port, () => {
-    console.log('server running  on port 3000')
+    console.log(`server running  on port ${port}`)
 });
+server.on('listening', onListening);
 
  function normalizePort(val){
     const port = parseInt(val, 10);
@@ -34,3 +35,11 @@ app.listen(port, () => {
     }
     return false;
 }   
+
+function onListening(){
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+        ? 'pipe' + addr
+        : 'port' + addr.port;
+    debug(`listening on ${bind}`);
+}
