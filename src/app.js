@@ -10,7 +10,10 @@ const router = express.Router();
 //Database connection
 mongoose.connect('mongodb://brenopms:balta@ds135399.mlab.com:35399/balta')
 
-//Carrega as rotas
+//load the models
+const Product = require('./models/product');
+
+//Load the routes
 const indexRoute = require('./routes/indexRoute');
 const productRoute  = require('./routes/productRoute');
 
