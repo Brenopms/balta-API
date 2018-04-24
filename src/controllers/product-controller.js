@@ -88,5 +88,16 @@ exports.put = (req, res, next) => {
 }
 
 exports.delete = (req, res, next) => {
-    res.status(200).send(req.body);
+        Product.findOneAndRemove(req.body.id)
+        .then (x => {
+            res.status(201).send({
+                message: "Product deleted successfully"
+            });
+        })
+        .catch(e => {
+            res.status(400).send({
+                message: 'Failed to delete the product',
+                data: e
+            });
+        });
 };
