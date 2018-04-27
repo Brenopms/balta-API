@@ -5,47 +5,46 @@ const Product = mongoose.model('Product');
 const ValidationContract = require('../validators/fluent-validator');
 const repository  = require('../repositories/product-repository');
 
-exports.get = (req, res, next) => {
-    repository.get()
-    .then(data => {
+exports.get = async(req, res, next) => {
+    try {
+        const data = await repository.get();
         res.status(200).send(data);
-    })
-    .catch(e =>{
-        res.status(400).send(e);
-    });
+    } 
+    catch (error){
+        res.status(500).send({
+            message: 'Failed to process the request'
+        });
+    }
 }
 
-exports.getBySlug = (req, res, next) => {
-    repository.getBySlug(req.params.slug)
-    .then(data => {
+exports.getBySlug = async(req, res, next) => {
+    try {
+        const data = await repository.getBySlug(req.params.slug)
         res.status(200).send(data);
-    })
-    .catch(e =>{
-        res.status(400).send(e);
-    });
+    } catch (error) {
+        res.status(400).send(error);
+    }
 }
 
-exports.getById = (req, res, next) => {
-    repository.getById(req.params.id)
-    .then(data => {
+exports.getById = async(req, res, next) => {
+    try {
+        const data = await repository.getById(req.params.id)
         res.status(200).send(data);
-    })
-    .catch(e =>{
-        res.status(400).send(e);
-    });
+    } catch (error) {
+        res.status(400).send(error);
+    }
 }
 
-exports.getByTag = (req, res, next) => {
-    repository.getByTag(req.params.tag)
-    .then(data => {
+exports.getByTag = async(req, res, next) => {
+    try {
+        const data = await repository.getByTag(req.params.tag);
         res.status(200).send(data);
-    })
-    .catch(e =>{
-        res.status(400).send(e);
-    });
+    } catch (error) {
+        res.status(400).send(error);
+    }
 }
 
-exports.post = (req, res, next) => {
+exports.post = async(req, res, next) => {
     let contract = new ValidationContract();
     contract.hasMinLen(req.body.title, 3, "The title must contain at least 3 characters ");
     contract.hasMinLen(req.body.slug, 3, "The slug must contain at least 3 characters ");
@@ -56,46 +55,43 @@ exports.post = (req, res, next) => {
         return;
     }
 
-    repository.create(req.body)
-    .then(x => {
+    try {
+        await repository.create(req.body);
         res.status(201).send({
             message: "Product saved successfully"
         });
-    })
-    .catch(e =>{
+    } catch (error) {
         res.status(400).send({
             message: "Fail to register the product", 
-            data: e
+            data: error
         });
-    });
-};
+    }
+}
 
-exports.put = (req, res, next) => {
-    repository.update(req.params.id, req.body)
-    .then (x => {
+exports.put = async(req, res, next) => {
+    try {
+        await repository.update(req.params.id, req.body);
         res.status(201).send({
             message: "Product updated successfully"
         });
-    })
-    .catch(e => {
+    } catch (error) {
         res.status(400).send({
             message: 'Failed to update the product',
-            data: e
+            data: error
         });
-    });
+    }
 }
 
-exports.delete = (req, res, next) => {
-        repository.delete(req.params.id)
-        .then (x => {
-            res.status(200).send({
-                message: "Product deleted successfully"
-            });
-        })
-        .catch(e => {
-            res.status(400).send({
-                message: 'Failed to delete the product',
-                data: e
-            });
+exports.delete = async(req, res, next) => {
+    try {
+        await repository.delete(req.params.id);
+        res.status(200).send({
+            message: "Product deleted successfully"
         });
+    } catch (error) {
+        res.status(400).send({
+            message: 'Failed to delete the product',
+            data: error
+        });
+    }
 };
