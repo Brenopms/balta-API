@@ -1,47 +1,47 @@
-'use strict';
+ 'use strict';
 
-let errors = [];
+class ValidationContract {
+    constructor() {
+        this.errors = [];
+    }
 
-function ValidationContract() {
-    errors = [];
-}
-
-ValidationContract.prototype.isRequired = (value, message) => {
+    isRequired(value, message){
     if (!value || value.length <= 0)
-        errors.push({ message: message });
+        this.errors.push({ message: message });
 }
 
-ValidationContract.prototype.hasMinLen = (value, min, message) => {
-    if (!value || value.length < min)
-        errors.push({ message: message });
-}
+    hasMinLen(value, min, message) {
+        if (!value || value.length < min)
+            this.errors.push({ message: message });
+    }
 
-ValidationContract.prototype.hasMaxLen = (value, max, message) => {
-    if (!value || value.length > max)
-        errors.push({ message: message });
-}
+    hasMaxLen(value, max, message) {
+        if (!value || value.length > max)
+            this.errors.push({ message: message });
+    }
 
-ValidationContract.prototype.isFixedLen = (value, len, message) => {
-    if (value.length != len)
-        errors.push({ message: message });
-}
+    isFixedLen(value, len, message) {
+        if (value.length != len)
+            this.errors.push({ message: message });
+    }
 
-ValidationContract.prototype.isEmail = (value, message) => {
-    var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
-    if (!reg.test(value))
-        errors.push({ message: message });
-}
+    isEmail(value, message)  {
+        let reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
+        if (!reg.test(value))
+            this.errors.push({ message: message });
+    }
 
-ValidationContract.prototype.errors = () => { 
-    return errors; 
-}
+    errors(){ 
+        return this.errors; 
+    }
 
-ValidationContract.prototype.clear = () => {
-    errors = [];
-}
+    clear()  {
+        this.errors = [];
+    }
 
-ValidationContract.prototype.isValid = () => {
-    return errors.length == 0;
+    isValid ()  {
+        return this.errors.length == 0;
+    }
 }
 
 module.exports = ValidationContract;

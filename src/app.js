@@ -12,7 +12,7 @@ mongoose.connect('mongodb://brenopms:balta@ds135399.mlab.com:35399/balta')
 
 //load the models
 const Product = require('./models/product');
-const Product = require('./models/customer');
+const Costumer = require('./models/customer');
 
 //Load the routes
 const indexRoute = require('./routes/indexRoute');
