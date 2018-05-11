@@ -51,7 +51,7 @@ exports.post = async(req, res, next) => {
     contract.hasMinLen(req.body.description, 3, "The description must contain at least 3 characters");
 
     if(!contract.isValid()){
-        res.status(400).send(contract.errors()).end();
+        res.status(400).send(contract.errors).end();
         return;
     }
 
