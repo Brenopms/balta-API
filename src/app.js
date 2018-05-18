@@ -19,6 +19,7 @@ const Order = require('./models/order');
 const indexRoute = require('./routes/indexRoute');
 const productRoute  = require('./routes/productRoute');
 const customerRoute = require('./routes/customerRoute');
+const orderRoute = require('./routes/orderRoute');
 
 
 //App config
@@ -29,5 +30,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/customer', customerRoute)
+app.use('/orders', orderRoute);
 
 module.exports = app;
