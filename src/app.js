@@ -1,14 +1,20 @@
 'use strict';
 
+/**
+ * Enviroment Variables Setup
+ */
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const config = require('./config');
 
 const app = express();
 const router = express.Router();
 
 //Database connection
-mongoose.connect('mongodb://brenopms:balta@ds135399.mlab.com:35399/balta')
+mongoose.connect(config.connectionString);
 
 //load the models
 const Product = require('./models/product');
@@ -33,3 +39,13 @@ app.use('/customer', customerRoute)
 app.use('/orders', orderRoute);
 
 module.exports = app;
+
+
+/**
+ * To do:
+ * 
+ * --> use dotenv module
+ * --> change md5 to bcrypt
+ * --> add validationContract to others controllers 
+ * 
+ */
