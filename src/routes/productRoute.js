@@ -12,8 +12,8 @@ router.get('/tags/:tag', controller.getByTag);
 
 router.post('/', authService.authorize, controller.post);
 
-router.put('/:id', controller.put);
+router.put('/:id', authService.authorize, controller.put);
 
-router.delete('/', controller.delete);
+router.delete('/', authService.authorize, controller.delete);
 
 module.exports = router;
