@@ -12,8 +12,7 @@ exports.decodeToken = async (token) => {
 }
 
 exports.authorize = (req, res, next) => {
-    let token = req.body.taken || req.query.token || req.headers['x-access-token'];
-
+    let token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(!token) {
         res.status(401).json({
             message: 'Restricted Access'

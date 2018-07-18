@@ -8,7 +8,7 @@ class ValidationContract {
     isRequired(value, message){
     if (!value || value.length <= 0)
         this.errors.push({ message: message });
-}
+    }
 
     hasMinLen(value, min, message) {
         if (!value || value.length < min)
